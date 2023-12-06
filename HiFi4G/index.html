@@ -6,12 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
           content="HiFi4G: High-Fidelity Human Performance Rendering via Compact Gaussian Splatting">
-    <meta name="author" content="Yuheng Jiang*,
-                                Kaixin Yao*,
-                                Zhuo Su,
-                                Zhehao Shen,
-                                Haimin Luo,
-                                Lan Xu">
+    <meta name="author" content="Yuheng Jiang, Zhehao Shen, Penghao Wang, Zhuo Su, Yu Hong, Yingliang Zhang, Jingyi Yu, Lan Xu">
 
     <title>HiFi4G: High-Fidelity Human Performance Rendering via Compact Gaussian Splatting</title>
     <!-- Bootstrap core CSS -->
@@ -29,59 +24,62 @@
     <div class="container"></div>
     <h2>HiFi4G: High-Fidelity Human Performance Rendering via Compact Gaussian Splatting</h2>
         <!-- <h3>ICCV 2021</h3> -->
-           <p class="abstract">4D modeling of human-object interactions from monocular RGBD camera.</p>
+           <!-- <p class="abstract">4D modeling of human-object interactions from monocular RGBD camera.</p> -->
     <hr>
     <!-- <h3 class="nerf_subheader_v2">CVPR 2023</h3> -->
     <p class="authors">
-        <a href="https://nowheretrix.github.io/"> Yuheng Jiang*</a>,
-        <a href="https://yaokxx.github.io/" > Kaixin Yao*</a>,
-        <a > Zhuo Su</a>,
+        <a href="https://nowheretrix.github.io/"> Yuheng Jiang</a>,
         <a > Zhehao Shen</a>,
-        <a href="https://haiminluo.github.io/"> Haimin Luo</a>, 
+        <a > Penghao Wang</a>,
+        <a > Zhuo Su</a>,
+        <a > Yu Hong</a>,
+        <a href="https://cn.linkedin.com/in/yingliangzhang"> Yingliang Zhang</a>,
+        <a href="https://sist.shanghaitech.edu.cn/2020/0707/c7499a53862/page.htm"> Jingyi Yu</a>,
         <a href="http://xu-lan.com/"> Lan Xu</a>
     </p>
     <div class="btn-group" role="group" aria-label="Top menu">
-        <a class="btn btn-primary" href="https://arxiv.org/abs/2304.03184">Paper</a>
-        <a class="btn btn-primary" href="https://nowheretrix.github.io/neuralfusion/">Sequences(coming soon)</a>
+        <a class="btn btn-primary" href="https://arxiv.org/abs/2304.03184">Arxiv</a>
+        <!-- <a class="btn btn-primary" href="https://nowheretrix.github.io/neuralfusion/">Sequences(coming soon)</a> -->
     </div>
 </div>
 
 <div class="container">
     <div class="section">
-        <div class="vcontainer">
-            <!-- <iframe class='video' src="https://www.youtube.com/embed/8F-D7kaZmJk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+        
+        <!-- <div class="vcontainer">
             <iframe class='video' src="https://www.youtube.com/embed/8F-D7kaZmJk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
+         -->
         <hr>
+       
         <p>
-            Convenient 4D modeling of human-object interactions is essential for numerous applications. However, monocular tracking and rendering of complex interaction scenarios remain challenging. In this paper, we propose Instant-NVR, a neural approach for instant volumetric human-object tracking and rendering using a single RGBD camera. It bridges traditional non-rigid tracking with recent instant radiance field techniques via a multi-thread tracking-rendering mechanism. In the tracking front-end, we adopt a robust human-object capture scheme to provide sufficient motion priors. We further introduce a separated instant neural representation with a novel hybrid deformation module for the interacting scene. We also provide an on-the-fly reconstruction scheme of the dynamic/static radiance fields via efficient motion-prior searching. Moreover, we introduce an online key frame selection scheme and a rendering-aware refinement strategy to significantly improve the appearance details for online novel-view synthesis. Extensive experiments demonstrate the effectiveness and efficiency of our approach for the instant generation of human-object radiance fields on the fly, notably achieving real-time photo-realistic novel view synthesis under complex human-object interactions.
-        </p>
-    </div>
-
-
-    <div class="section">
-        <h2>Overview</h2>
-        <hr>
-        <p>
-           We adopt a tracking-rendering mechanism for our Instant-NVR. The tracking front-end provides online motion estimations of both the performer and object, while the rendering back-end reconstructs the radiance fields of the interaction scene to provide instant novel view synthesis with photo-realism.
+            We have recently seen tremendous progress in photo-real human modeling and rendering. Yet, efficiently rendering realistic human performance and integrating it into the rasterization pipeline remains challenging. 
+In this paper, we present HiFi4G, an explicit and compact Gaussian-based approach for high-fidelity human performance rendering from dense footage. Our core intuition is to marry the 3D Gaussian representation with non-rigid tracking, achieving a compact and compression-friendly representation.
+We first propose a dual-graph mechanism to obtain motion priors, with a coarse deformation graph for effective initialization and a fine-grained Gaussian graph to enforce subsequent constraints. 
+Then, we utilize a 4D Gaussian optimization scheme with adaptive spatial-temporal regularizers to effectively balance the non-rigid prior and Gaussian updating.
+We also present a companion compression scheme with residual compensation for immersive experiences on 
+various platforms. It achieves a substantial compression rate of approximately 25 times, with less than 2MB of storage per frame.
+Extensive experiments demonstrate the effectiveness of our approach, which significantly outperforms existing approaches in terms of optimization speed, rendering quality, and storage overhead.
         </p>
         <div class="row align-items-center">
             <div class="col justify-content-center text-center">
-                <img src="img/overview.png" style="width:100%; margin-right:-10px; margin-top:-10px;">
+                <img src="img/teaser.png" style="width:100%; margin-right:-10px; margin-top:5px;">
         </div> 
     </div>
 
+
+
     <div class="section">
-        <h2>Rendering Pipeline</h2>
+        <h2>Pipeline</h2>
         <hr>
-        <p>
-           For the rendering back-end, we adopt a separate instant neural representation. Specifically, both the dynamic performer and static object are represented as implicit radiance fields with multi-scale feature hashing in the canonical
-           space and share volumetric rendering for novel view synthesis. For the dynamic human, we further introduce a hybrid deformation module to efficiently utilize the non-rigid motion priors. Then, we modify the training process of radiance fields into a key-frame based setting, so as to enable graduate and on-the-fly optimization of the radiance fields within the rendering thread. 
-        </p>
         <div class="row align-items-center">
             <div class="col justify-content-center text-center">
                 <img src="img/pipeline.png" style="width:100%; margin-right:-10px; margin-top:-10px;">
         </div> 
+        <p>
+             The keyframe based non-rigid tracking establishes a coarse deformation graph and tracks the motions for Gaussian optimization. Subsequently, HiFi4G initializes first frame Gaussians from NeuS2 and constructs a fine-grained Gaussian graph to enhance temporal coherence. We then employ the ED graph to warp 4D Gaussians, applying both E_smooth and E_temp constraints to the Gaussian graph, which yields spatial-temporally compact and compression-friendly 4D Gaussians, thus facilitating efficient compression.
+        </p>
+       
     </div>
     <div class="section">
         <h2>Result</h2>
@@ -91,7 +89,7 @@
                 <img src="img/gallery.png" style="width:100%; margin-right:-10px; margin-top:-10px;">
         </div>
         <p>
-            Here are our rendering results. Instant-NVR achieves real-time photo-realistic novel view synthesis under complex human-object interactions.
+            Here are our rendering results. HiFi4G delivers real-time high-fidelity rendering of human performance across challenging motions, such as playing instruments, dancing and changing clothes.
         </p>
     </div>
    
